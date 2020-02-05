@@ -37,6 +37,8 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 # Application definition
 
 INSTALLED_APPS = [
+    'toggl',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
