@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 from environ import Env, Path
-from django.utils.translation import gettext_lazy as _
 
 
 env = Env(
