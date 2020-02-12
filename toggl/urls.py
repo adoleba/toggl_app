@@ -1,7 +1,8 @@
 from django.urls import path
 
-from toggl.views import index
+from toggl.views import index, done
 
 urlpatterns = [
-    path('', index),
+    path('', index, name='index'),
+    path('done/', done),
 ]

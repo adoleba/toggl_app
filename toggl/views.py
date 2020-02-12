@@ -150,3 +150,7 @@ def index(request):
         form = EntryForm()
 
     return render(request, 'toggl/index.html', {'form': form})
+
+
+def done(request):
+    return render(request, 'toggl/done.html')
