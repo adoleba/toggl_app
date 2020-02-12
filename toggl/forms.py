@@ -16,14 +16,17 @@ class PasswordInput(forms.PasswordInput):
 
 
 class EntryForm(forms.Form):
-    task = forms.CharField(label='Zadanie', max_length=50)
+    task = forms.CharField(label='Zadanie', max_length=50, widget=forms.TextInput(attrs={'class': 'form-control'}))
     date_start = forms.DateField(label='Początek zadania', widget=DateInput, initial=start_day)
     date_end = forms.DateField(label='Koniec zadania', widget=DateInput, initial=end_day)
-    toggl_login = forms.CharField(label='Login do konta Toggl', max_length=50)
-    toggl_id_number = forms.IntegerField(label='Numer id konta Toggl')
-    toggl_password = forms.CharField(label='Hasło do konta Toggl', max_length=50, widget=PasswordInput)
-    hour_start = forms.TimeField(label='Godzina rozpoczęcia', widget=TimeInput, required=False, initial="10:00:00.00")
-    hour_end = forms.TimeField(label='Godzina zakończenia', widget=TimeInput, required=False, initial="18:00:00.00")
+    toggl_login = forms.CharField(label='Login do konta Toggl', max_length=50,
+                                  widget=forms.TextInput(attrs={'class': 'form-control'}))
+    toggl_id_number = forms.IntegerField(label='Numer id konta Toggl',
+                                         widget=forms.TextInput(attrs={'class': 'form-control'}))
+    toggl_password = forms.CharField(label='Hasło do konta Toggl', max_length=50,
+                                     widget=PasswordInput(attrs={'class': 'form-control'}))
+    hour_start = forms.TimeField(label='Godzina rozpoczęcia', widget=TimeInput, required=False, initial="10:00")
+    hour_end = forms.TimeField(label='Godzina zakończenia', widget=TimeInput, required=False, initial="18:00")
     monday_hour_start = forms.TimeField(widget=TimeInput, required=False)
     monday_hour_end = forms.TimeField(widget=TimeInput, required=False)
     tuesday_hour_start = forms.TimeField(widget=TimeInput, required=False)

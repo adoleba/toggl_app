@@ -3,17 +3,19 @@
 
 {% block content %}
     <section class="p-5">
-        <div class="container bg-white p-5">
-            <div class="row">
-                <div class="text-center">
-                    <h1 class="font-weight-bold">Dodano!</h1>
-                    <p class="text-center">
-                        Zadanie zostało dodane! <br />
-                        Jeśli nie widzisz go w kalendarzu Toggl, podałeś nieprawidłowe dane
-                        autoryzacyjne (login, hasło lub numer id). Sprawdź ich poprawność i uzupełnij kolejny raz.
-                    </p>
-                    <a href="{% url 'index' %}" class="btn btn-outline-dark">Powrót na stronę główną</a>
+        <div class="custom-box">
+            <div class="container bg-white p-5">
+                <div class="row">
+                    <div class="text-center">
+                        <h1 class="font-weight-bold">Dodano!</h1>
+                        <p class="text-center">
+                            Zadanie zostało dodane! <br />
+                            Jeśli nie widzisz go w kalendarzu Toggl, podałeś nieprawidłowe dane
+                            autoryzacyjne (login, hasło lub numer id). Sprawdź ich poprawność i uzupełnij kolejny raz.
+                        </p>
+                        <a href="{% url 'index' %}" class="btn btn-outline-dark">Powrót na stronę główną</a>
 
+                    </div>
                 </div>
             </div>
         </div>

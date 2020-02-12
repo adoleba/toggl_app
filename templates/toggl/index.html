@@ -4,65 +4,70 @@
 {% block content %}
 
     <section class="p-5">
-        <div class="container bg-white p-5 ">
-            <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="text-center">
-                        <h1 class="font-weight-bold">Test</h1>
-                        <p class="text-center">test</p>
+        <div class="custom-box">
+            <div class="container bg-white p-5">
 
-                        <form action="." method="post">
-                            {% csrf_token %}
-                             <p class="font-weight-bold pt-3 mb-0">{{ form.task.label }}:</p>
-                                {{ form.task }}
-                            <p class="font-weight-bold pt-3 mb-0">{{ form.date_start.label }}:</p>
-                                 {{ form.date_start }}
-                            <p class="font-weight-bold pt-3 mb-0">{{ form.date_end.label }}:</p>
-                                {{ form.date_end }}
-                            <p class="font-weight-bold pt-3 mb-0">Godziny pracy w poszczególne dni tygodnia są: </p>
-                                <button type="button" class="btn btn-dark btn-sm" onclick="regularHours()">Takie same</button>
-                                <button type="button" class="btn btn-dark btn-sm" onclick="variableHours()">Różne</button>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="text-center">
+                            <h1 class="font-weight-bold">Test</h1>
+                            <p class="text-center">test</p>
 
-                            <div id="variable-hours" style="display: none">
-                                <p class="font-weight-bold pt-3 mb-0">Poniedziałek</p>
-                                    Początek: {{ form.monday_hour_start }}
-                                    Koniec: {{ form.monday_hour_end }}
 
-                                <p class="font-weight-bold pt-3 mb-0">Wtorek</p>
-                                    Początek: {{ form.tuesday_hour_start }}
-                                    Koniec: {{ form.tuesday_hour_end }}
+                            <form action="." method="post">
+                                {% csrf_token %}
+                                 <p class="font-weight-bold pt-3 mb-0">{{ form.task.label }}:</p>
+                                    {{ form.task }}
+                                <p class="font-weight-bold pt-3 mb-0">{{ form.date_start.label }}:</p>
+                                     {{ form.date_start }}
+                                <p class="font-weight-bold pt-3 mb-0">{{ form.date_end.label }}:</p>
+                                    {{ form.date_end }}
+                                <p class="font-weight-bold pt-3 mb-0">Godziny pracy w poszczególne dni tygodnia są: </p>
+                                <button type="button" class="btn btn-dark btn-sm m-1" onclick="regularHours()">Takie same</button>
+                                <button type="button" class="btn btn-dark btn-sm m-1" onclick="variableHours()">Różne</button>
 
-                                <p class="font-weight-bold pt-3 mb-0">Środa</p>
-                                    Początek: {{ form.wednesday_hour_start }}
-                                    Koniec: {{ form.wednesday_hour_end }}
+                                <div id="variable-hours" style="display: none">
+                                    <p class="font-weight-bold pt-3">Poniedziałek</p>
+                                    <p>Początek: <br/>{{ form.monday_hour_start }}</p>
+                                    <p>Koniec: <br />{{ form.monday_hour_end }}</p>
 
-                                <p class="font-weight-bold pt-3 mb-0">Czwartek</p>
-                                    Początek: {{ form.thursday_hour_start }}
-                                    Koniec: {{ form.thursday_hour_end }}
+                                    <p class="font-weight-bold pt-3 mb-0">Wtorek</p>
+                                    <p>Początek: <br/>{{ form.tuesday_hour_start }}</p>
+                                    <p>Koniec: <br /> {{ form.tuesday_hour_end }}</p>
 
-                                <p class="font-weight-bold pt-3 mb-0">Piątek</p>
-                                    Początek: {{ form.friday_hour_start }}
-                                    Koniec: {{ form.friday_hour_end }}<br />
-                                </div>
+                                    <p class="font-weight-bold pt-3 mb-0">Środa</p>
+                                    <p>Początek: <br/>{{ form.wednesday_hour_start }}</p>
+                                    <p>Koniec: <br />{{ form.wednesday_hour_end }}</p>
 
-                                <div id="regular-hours" style="display: none">
-                                    <p class="font-weight-bold pt-3 mb-0">{{ form.hour_start.label }}</p>
-                                        {{ form.hour_start }}
-                                    <p class="font-weight-bold pt-3 mb-0">{{ form.hour_end.label }}: </p>
-                                        {{ form.hour_end }}
-                                </div>
+                                    <p class="font-weight-bold pt-3 mb-0">Czwartek</p>
+                                    <p>Początek: <br/>{{ form.thursday_hour_start }}</p>
+                                    <p>Koniec: <br />{{ form.thursday_hour_end }}</p>
 
-                                <p class="font-weight-bold pt-3 mb-0">{{ form.toggl_login.label }}: </p>
-                                    {{ form.toggl_login }}
-                                <p class="font-weight-bold pt-3 mb-0">{{ form.toggl_password.label }}: </p>
-                                    {{ form.toggl_password }}
-                                <p class="font-weight-bold pt-3 mb-0">{{ form.toggl_id_number.label }}: </p>
-                                    {{ form.toggl_id_number }}
-                                <br /><br />
+                                    <p class="font-weight-bold pt-3 mb-0">Piątek</p>
+                                    <p>Początek: <br/>{{ form.friday_hour_start }}</p>
+                                    <p>Koniec: <br />{{ form.friday_hour_end }}</p>
+                                    </div>
 
-                                <button type="submit" class="btn btn-outline-dark">Dodaj</button>
+                                    <div id="regular-hours" style="display: none">
+                                        <p class="font-weight-bold pt-3 mb-0">{{ form.hour_start.label }}</p>
+                                            {{ form.hour_start }}
+                                        <p class="font-weight-bold pt-3 mb-0">{{ form.hour_end.label }}: </p>
+                                            {{ form.hour_end }}
+                                    </div>
 
-                        </form>
+                                    <p class="font-weight-bold pt-3 mb-0">{{ form.toggl_login.label }}: </p>
+                                        {{ form.toggl_login }}
+                                    <p class="font-weight-bold pt-3 mb-0">{{ form.toggl_password.label }}: </p>
+                                        {{ form.toggl_password }}
+                                    <p class="font-weight-bold pt-3 mb-0">{{ form.toggl_id_number.label }}: </p>
+                                        {{ form.toggl_id_number }}
+                                    <br /><br />
+
+                                    <button type="submit" class="btn btn-outline-dark">Dodaj</button>
+
+                            </form>
+
+                        </div>
                     </div>
                 </div>
             </div>
