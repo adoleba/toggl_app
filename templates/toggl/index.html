@@ -20,10 +20,10 @@
                             <p class="font-weight-bold pt-3 mb-0">{{ form.date_end.label }}:</p>
                                 {{ form.date_end }}
                             <p class="font-weight-bold pt-3 mb-0">Godziny pracy w poszczególne dni tygodnia są: </p>
-                                <button type="button" class="btn btn-dark btn-sm" id="regular-hours-button">Takie same</button>
-                                <button type="button" class="btn btn-dark btn-sm" id="variable-hours-button">Różne</button>
+                                <button type="button" class="btn btn-dark btn-sm" onclick="regularHours()">Takie same</button>
+                                <button type="button" class="btn btn-dark btn-sm" onclick="variableHours()">Różne</button>
 
-                            <div id="variable-hours">
+                            <div id="variable-hours" style="display: none">
                                 <p class="font-weight-bold pt-3 mb-0">Poniedziałek</p>
                                     Początek: {{ form.monday_hour_start }}
                                     Koniec: {{ form.monday_hour_end }}
@@ -45,7 +45,7 @@
                                     Koniec: {{ form.friday_hour_end }}<br />
                                 </div>
 
-                                <div id="regular-hours">
+                                <div id="regular-hours" style="display: none">
                                     <p class="font-weight-bold pt-3 mb-0">{{ form.hour_start.label }}</p>
                                         {{ form.hour_start }}
                                     <p class="font-weight-bold pt-3 mb-0">{{ form.hour_end.label }}: </p>
