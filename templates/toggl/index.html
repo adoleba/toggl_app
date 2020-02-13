@@ -27,43 +27,74 @@
                                 <button type="button" class="btn btn-dark btn-sm m-1" onclick="variableHours()">Różne</button>
 
                                 <div id="variable-hours" style="display: none">
-                                    <p class="font-weight-bold pt-3">Poniedziałek</p>
-                                    <p>Początek: <br/>{{ form.monday_hour_start }}</p>
-                                    <p>Koniec: <br />{{ form.monday_hour_end }}</p>
-
-                                    <p class="font-weight-bold pt-3 mb-0">Wtorek</p>
-                                    <p>Początek: <br/>{{ form.tuesday_hour_start }}</p>
-                                    <p>Koniec: <br /> {{ form.tuesday_hour_end }}</p>
-
-                                    <p class="font-weight-bold pt-3 mb-0">Środa</p>
-                                    <p>Początek: <br/>{{ form.wednesday_hour_start }}</p>
-                                    <p>Koniec: <br />{{ form.wednesday_hour_end }}</p>
-
-                                    <p class="font-weight-bold pt-3 mb-0">Czwartek</p>
-                                    <p>Początek: <br/>{{ form.thursday_hour_start }}</p>
-                                    <p>Koniec: <br />{{ form.thursday_hour_end }}</p>
-
-                                    <p class="font-weight-bold pt-3 mb-0">Piątek</p>
-                                    <p>Początek: <br/>{{ form.friday_hour_start }}</p>
-                                    <p>Koniec: <br />{{ form.friday_hour_end }}</p>
+                                    <div class="card py-3 my-3">
+                                        <p class="font-weight-bold">Poniedziałek</p>
+                                        <span onclick="showDay('monday-hours', 'monday-add')" id="monday-add">dodaj</span>
+                                        <div id="monday-hours"  style="display: none">
+                                            <p>Początek: <br/>{{ form.monday_hour_start }}</p>
+                                            <p>Koniec: <br />{{ form.monday_hour_end }}</p>
+                                            <span onclick="hideDay('monday-hours', 'monday-add')">ukryj</span>
+                                        </div>
                                     </div>
 
-                                    <div id="regular-hours" style="display: none">
-                                        <p class="font-weight-bold pt-3 mb-0">{{ form.hour_start.label }}</p>
-                                            {{ form.hour_start }}
-                                        <p class="font-weight-bold pt-3 mb-0">{{ form.hour_end.label }}: </p>
-                                            {{ form.hour_end }}
+                                    <div class="card py-3 my-3">
+                                        <p class="font-weight-bold">Wtorek</p>
+                                        <span onclick="showDay('tuesday-hours', 'tuesday-add')" id="tuesday-add">dodaj</span>
+                                        <div id="tuesday-hours"  style="display: none">
+                                            <p>Początek: <br/>{{ form.tuesday_hour_start }}</p>
+                                            <p>Koniec: <br /> {{ form.tuesday_hour_end }}</p>
+                                            <span onclick="hideDay('tuesday-hours', 'tuesday-add')">ukryj</span>
+                                        </div>
                                     </div>
 
-                                    <p class="font-weight-bold pt-3 mb-0">{{ form.toggl_login.label }}: </p>
-                                        {{ form.toggl_login }}
-                                    <p class="font-weight-bold pt-3 mb-0">{{ form.toggl_password.label }}: </p>
-                                        {{ form.toggl_password }}
-                                    <p class="font-weight-bold pt-3 mb-0">{{ form.toggl_id_number.label }}: </p>
-                                        {{ form.toggl_id_number }}
-                                    <br /><br />
+                                    <div class="card py-3 my-3">
+                                        <p class="font-weight-bold">Środa</p>
+                                        <span onclick="showDay('wednesday-hours', 'wednesday-add')" id="wednesday-add">dodaj</span>
+                                        <div id="wednesday-hours"  style="display: none">
+                                            <p>Początek: <br/>{{ form.wednesday_hour_start }}</p>
+                                            <p>Koniec: <br />{{ form.wednesday_hour_end }}</p>
+                                            <span onclick="hideDay('wednesday-hours', 'wednesday-add')">ukryj</span>
+                                        </div>
+                                    </div>
 
-                                    <button type="submit" class="btn btn-outline-dark">Dodaj</button>
+                                    <div class="card py-3 my-3">
+                                        <p class="font-weight-bold">Czwartek</p>
+                                        <span onclick="showDay('thursday-hours', 'thursday-add')" id="thursday-add">dodaj</span>
+                                        <div id="thursday-hours"  style="display: none">
+                                            <p>Początek: <br/>{{ form.thursday_hour_start }}</p>
+                                            <p>Koniec: <br />{{ form.thursday_hour_end }}</p>
+                                            <span onclick="hideDay('thursday-hours', 'thursday-add')">ukryj</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="card py-3 my-3">
+                                        <p class="font-weight-bold">Piątek</p>
+                                        <span onclick="showDay('friday-hours', 'friday-add')" id="friday-add">dodaj</span>
+                                        <div id="friday-hours"  style="display: none">
+                                            <p>Początek: <br/>{{ form.friday_hour_start }}</p>
+                                            <p>Koniec: <br />{{ form.friday_hour_end }}</p>
+                                            <span onclick="hideDay('friday-hours', 'friday-add')">ukryj</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div id="regular-hours" style="display: none">
+                                    <p class="font-weight-bold pt-3 mb-0">{{ form.hour_start.label }}</p>
+                                        {{ form.hour_start }}
+                                    <p class="font-weight-bold pt-3 mb-0">{{ form.hour_end.label }}: </p>
+                                        {{ form.hour_end }}
+                                </div>
+
+                                <p class="font-weight-bold pt-3 mb-0">{{ form.toggl_login.label }}: </p>
+                                    {{ form.toggl_login }}
+                                <p class="font-weight-bold pt-3 mb-0">{{ form.toggl_password.label }}: </p>
+                                    {{ form.toggl_password }}
+                                <p class="font-weight-bold pt-3 mb-0">{{ form.toggl_id_number.label }}: </p>
+                                    {{ form.toggl_id_number }}
+                                <br /><br />
+
+                                <button type="submit" class="btn btn-outline-dark">Dodaj</button>
 
                             </form>
 
