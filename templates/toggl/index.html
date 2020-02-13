@@ -23,8 +23,10 @@
                                 <p class="font-weight-bold pt-3 mb-0">{{ form.date_end.label }}:</p>
                                     {{ form.date_end }}
                                 <p class="font-weight-bold pt-3 mb-0">Godziny pracy w poszczególne dni tygodnia są: </p>
-                                <button type="button" class="btn btn-dark btn-sm m-1" onclick="regularHours()">Takie same</button>
-                                <button type="button" class="btn btn-dark btn-sm m-1" onclick="variableHours()">Różne</button>
+
+                                {% for choice in form.different_hours %}
+                                    <button type="button" class="btn btn-dark btn-sm m-1" onclick="hours()">{{ choice }}</button>
+                                {% endfor %}
 
                                 <div id="variable-hours" style="display: none">
                                     <div class="card py-3 my-3">

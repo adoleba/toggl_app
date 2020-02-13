@@ -2,7 +2,7 @@ from datetime import timedelta
 
 import requests
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from toggl.forms import EntryForm
 
@@ -29,7 +29,7 @@ def index(request):
             toggl_id_number = form.cleaned_data['toggl_id_number']
             toggl_password = form.cleaned_data['toggl_password']
 
-            if different_hours is False:
+            if different_hours == 'R':  # regular, choice from choices
                 working_days = []
                 week_days = {}
 
@@ -144,7 +144,7 @@ def index(request):
                         headers=headers,
                     )
 
-            return HttpResponse('Dodano')
+            return redirect('done')
 
     else:
         form = EntryForm()

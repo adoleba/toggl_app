@@ -1,11 +1,12 @@
-function regularHours() {
-    document.getElementById('regular-hours').style.display = 'block';
-    document.getElementById('variable-hours').style.display = 'none'
-}
-
-function variableHours() {
-    document.getElementById('variable-hours').style.display = 'block';
-    document.getElementById('regular-hours').style.display = 'none';
+function hours() {
+    if (document.getElementById('id_different_hours_0').checked === true) {
+        document.getElementById('regular-hours').style.display = 'block';
+        document.getElementById('variable-hours').style.display = 'none'
+    }
+    else {
+        document.getElementById('variable-hours').style.display = 'block';
+        document.getElementById('regular-hours').style.display = 'none';
+    }
 }
 
 function showDay(id, add) {

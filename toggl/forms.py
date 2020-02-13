@@ -15,6 +15,10 @@ class PasswordInput(forms.PasswordInput):
     input_type = 'password'
 
 
+CHOICES = [('R', 'Takie same'),
+           ('V', 'Różne')]
+
+
 class EntryForm(forms.Form):
     task = forms.CharField(label='Zadanie', max_length=50, widget=forms.TextInput(attrs={'class': 'form-control'}))
     date_start = forms.DateField(label='Początek zadania', widget=DateInput, initial=start_day)
@@ -25,6 +29,7 @@ class EntryForm(forms.Form):
                                          widget=forms.TextInput(attrs={'class': 'form-control'}))
     toggl_password = forms.CharField(label='Hasło do konta Toggl', max_length=50,
                                      widget=PasswordInput(attrs={'class': 'form-control'}))
+    different_hours = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect)
     hour_start = forms.TimeField(label='Godzina rozpoczęcia', widget=TimeInput, required=False, initial="10:00")
     hour_end = forms.TimeField(label='Godzina zakończenia', widget=TimeInput, required=False, initial="18:00")
     monday_hour_start = forms.TimeField(widget=TimeInput, required=False)
