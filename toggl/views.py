@@ -1,6 +1,7 @@
 from datetime import timedelta
 
 import requests
+from django.contrib import messages
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import FormView
@@ -23,6 +24,15 @@ class EntryView(FormView):
     def form_valid(self, form):
         add_toggl_entry(form.cleaned_data)
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        for field in form.errors:
+            field_messages = form.errors[field].as_data()
+            message = str(field_messages[0]).strip("[]'")  # dla każdego pola zwraca tylko jeden, pierwszy błąd
+            form[field].field.widget.attrs['class'] = "alert alert-danger"
+            messages.error(self.request, message)
+
+        return super().form_invalid(form)
 
 
 def add_toggl_entry(valid_data):
