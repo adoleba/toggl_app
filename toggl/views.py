@@ -31,7 +31,6 @@ class EntryView(FormView):
             message = str(field_messages[0]).strip("[]'")  # dla każdego pola zwraca tylko jeden, pierwszy błąd
             form[field].field.widget.attrs['class'] = "alert alert-danger"
             messages.error(self.request, message)
-
         return super().form_invalid(form)
 
 
