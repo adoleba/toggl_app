@@ -1,11 +1,13 @@
 function hours() {
     if (document.getElementById('id_different_hours_0').checked === true) {
         document.getElementById('regular-hours').style.display = 'block';
-        document.getElementById('variable-hours').style.display = 'none'
+        document.getElementById('variable-hours').style.display = 'none';
+        document.getElementsByClassName('btn btn-secondary')[0].classList = 'btn btn-dark';
     }
     else {
         document.getElementById('variable-hours').style.display = 'block';
         document.getElementById('regular-hours').style.display = 'none';
+        document.getElementsByClassName('btn btn-dark')[0].classList = 'btn btn-secondary';
     }
 }
 
@@ -26,11 +28,13 @@ function hideDay(id, add) {
 function reloadHours() {
     if (document.getElementById('id_different_hours_0').checked === true) {
         document.getElementById('regular-hours').style.display = 'block';
-        document.getElementById('variable-hours').style.display = 'none'
+        document.getElementById('variable-hours').style.display = 'none';
+        document.getElementsByClassName('btn btn-secondary')[0].classList = 'btn btn-dark';
     }
     if (document.getElementById('id_different_hours_1').checked === true) {
         document.getElementById('variable-hours').style.display = 'block';
         document.getElementById('regular-hours').style.display = 'none';
+        document.getElementsByClassName('btn btn-secondary')[1].classList = 'btn btn-dark';
     }
 
     if (document.getElementById('id_monday_hour_start').value.length !== 0 ||
