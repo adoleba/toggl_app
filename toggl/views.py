@@ -38,6 +38,10 @@ class EntryView(FormView):
         return super().form_invalid(form)
 
 
+def done(request):
+    return render(request, 'toggl/done.html')
+
+
 def add_toggl_entry(valid_data):
     different_hours = valid_data['different_hours']
     date_start = valid_data['date_start']
@@ -64,7 +68,7 @@ def add_toggl_entry(valid_data):
 
         for day in week_days:
             date = week_days[day]
-            if week_days[day] >= date_start:
+            if date_end >= week_days[day] >= date_start:
                 working_days.append(date)
             next_day = date + timedelta(days=7)
             while next_day <= date_end:
@@ -134,7 +138,7 @@ def add_toggl_entry(valid_data):
         for day in week_days:
             date = week_days[day][0]
 
-            if date >= date_start:
+            if date_end >= date >= date_start:
                 # date, start hour, duration in sec
                 working_days[date] = [date, week_days[day][1], week_days[day][2]]
             next_day = date + timedelta(days=7)
@@ -161,7 +165,3 @@ def add_toggl_entry(valid_data):
                 json=data,
                 headers=headers,
             )
-
-
-def done(request):
-    return render(request, 'toggl/done.html')
