@@ -10,8 +10,10 @@
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="text-center">
-                            <h1 class="font-weight-bold">Test</h1>
-                            <p class="text-center">test</p>
+                            <h1 class="font-weight-bold">Toggl App</h1>
+                            <p class="text-center">
+                                Zadanie dla podanych godzin i podanych dni zostanie dodane do Twojego konta Toggl.
+                            </p>
 
                             {% if messages %}
                                 {% for message in messages %}
@@ -32,7 +34,7 @@
                                 <p class="font-weight-bold pt-3 mb-0">Godziny pracy w poszczególne dni tygodnia są: </p>
 
                                 {% for choice in form.different_hours %}
-                                    <div class="btn-group btn-group-toggle m-0" data-toggle="buttons" onclick="hours()">
+                                    <div class="btn-group btn-group-toggle m-1" data-toggle="buttons" onclick="hours()">
                                         <label class="btn btn-secondary">{{ choice }}</label>
                                     </div>
                                 {% endfor %}
