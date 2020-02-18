@@ -84,10 +84,10 @@ class EntryForm(forms.Form):
 
         if thursday_hour_end is not None and thursday_hour_start is None:
             self.add_error('thursday_hour_start', 'Podaj początek pracy w czwartki')
-        if wednesday_hour_start is not None and wednesday_hour_end is None:
+        if thursday_hour_start is not None and thursday_hour_end is None:
             self.add_error('thursday_hour_end', 'Podaj koniec pracy w czwartki')
 
         if friday_hour_end is not None and friday_hour_start is None:
             self.add_error('friday_hour_start', 'Podaj początek pracy w piątki')
-        if wednesday_hour_start is not None and wednesday_hour_end is None:
+        if friday_hour_start is not None and friday_hour_end is None:
             self.add_error('friday_hour_end', 'Podaj koniec pracy w piątki')
