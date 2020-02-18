@@ -26,10 +26,14 @@ class EntryView(FormView):
         return super().form_valid(form)
 
     def form_invalid(self, form):
+        text_fields = ['task', 'toggl_login', 'toggl_id_number', 'toggl_password']
         for field in form.errors:
             field_messages = form.errors[field].as_data()
             message = str(field_messages[0]).strip("[]'")  # dla każdego pola zwraca tylko jeden, pierwszy błąd
-            form[field].field.widget.attrs['class'] = "alert alert-danger"
+            if field in text_fields:
+                form[field].field.widget.attrs['class'] = "form-control alert alert-danger"
+            else:
+                form[field].field.widget.attrs['class'] = "alert alert-danger"
             messages.error(self.request, message)
         return super().form_invalid(form)
 
