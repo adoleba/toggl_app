@@ -21,6 +21,7 @@ CHOICES = [('R', 'Takie same'),
 
 class EntryForm(forms.Form):
     use_required_attribute = False
+
     task = forms.CharField(label='Zadanie', max_length=50, widget=forms.TextInput(attrs={'class': 'form-control'}),
                            error_messages={'required': "Wpisz nazwę zadania"})
     date_start = forms.DateField(label='Początek zadania', widget=DateInput, initial=start_day,
@@ -98,4 +99,5 @@ class EntryForm(forms.Form):
                     if wednesday_hour_end is None and wednesday_hour_start is None:
                         if thursday_hour_end is None and thursday_hour_start is None:
                             if friday_hour_end is None and friday_hour_start is None:
-                                self.add_error('different_hours', 'Podaj godziny w wybrane dni tygodnia, bądź wybierz opcję godzin stałych')
+                                self.add_error('different_hours',
+                                               'Podaj godziny w wybrane dni tygodnia, bądź wybierz opcję godzin stałych')

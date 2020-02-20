@@ -29,7 +29,9 @@ class EntryView(FormView):
         text_fields = ['task', 'toggl_login', 'toggl_id_number', 'toggl_password']
         for field in form.errors:
             field_messages = form.errors[field].as_data()
-            message = str(field_messages[0]).strip("[]'")  # dla każdego pola zwraca tylko jeden, pierwszy błąd
+            # for every form field, if it has more, return only first error
+            message = str(field_messages[0]).strip("[]'")
+
             if field in text_fields:
                 form[field].field.widget.attrs['class'] = "form-control alert alert-danger"
             else:
