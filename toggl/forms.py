@@ -56,48 +56,49 @@ class EntryForm(forms.Form):
 
     def clean(self):
         cleaned_data = super().clean()
-        monday_hour_end = self.cleaned_data.get('monday_hour_end')
-        monday_hour_start = cleaned_data.get('monday_hour_start')
-        tuesday_hour_end = cleaned_data.get('tuesday_hour_end')
-        tuesday_hour_start = cleaned_data.get('tuesday_hour_start')
-        wednesday_hour_end = cleaned_data.get('wednesday_hour_end')
-        wednesday_hour_start = cleaned_data.get('wednesday_hour_start')
-        thursday_hour_end = cleaned_data.get('thursday_hour_end')
-        thursday_hour_start = cleaned_data.get('thursday_hour_start')
-        friday_hour_end = cleaned_data.get('friday_hour_end')
-        friday_hour_start = cleaned_data.get('friday_hour_start')
+
+        week_hours = {}
+
+        week_hours['monday_hour_end'] = cleaned_data.get('monday_hour_end')
+        week_hours['monday_hour_start'] = cleaned_data.get('monday_hour_start')
+        week_hours['tuesday_hour_end'] = cleaned_data.get('tuesday_hour_end')
+        week_hours['tuesday_hour_start'] = cleaned_data.get('tuesday_hour_start')
+        week_hours['wednesday_hour_end'] = cleaned_data.get('wednesday_hour_end')
+        week_hours['wednesday_hour_start'] = cleaned_data.get('wednesday_hour_start')
+        week_hours['thursday_hour_end'] = cleaned_data.get('thursday_hour_end')
+        week_hours['thursday_hour_start'] = cleaned_data.get('thursday_hour_start')
+        week_hours['friday_hour_end'] = cleaned_data.get('friday_hour_end')
+        week_hours['friday_hour_start'] = cleaned_data.get('friday_hour_start')
         different_hours = cleaned_data.get('different_hours')
 
-        if monday_hour_end is not None and monday_hour_start is None:
+        if week_hours['monday_hour_end'] is not None and week_hours['monday_hour_start'] is None:
             self.add_error('monday_hour_start', 'Podaj początek pracy w poniedziałki')
-        if monday_hour_start is not None and monday_hour_end is None:
+        if week_hours['monday_hour_start'] is not None and week_hours['monday_hour_end'] is None:
             self.add_error('monday_hour_end', 'Podaj koniec pracy w poniedziałki')
 
-        if tuesday_hour_end is not None and tuesday_hour_start is None:
+        if week_hours['tuesday_hour_end'] is not None and week_hours['tuesday_hour_start'] is None:
             self.add_error('tuesday_hour_start', 'Podaj początek pracy we wtorki')
-        if tuesday_hour_start is not None and tuesday_hour_end is None:
+        if week_hours['tuesday_hour_start'] is not None and week_hours['tuesday_hour_end'] is None:
             self.add_error('tuesday_hour_end', 'Podaj koniec pracy we wtorki')
 
-        if wednesday_hour_end is not None and wednesday_hour_start is None:
+        if week_hours['wednesday_hour_end'] is not None and week_hours['wednesday_hour_start'] is None:
             self.add_error('wednesday_hour_start', 'Podaj początek pracy w środy')
-        if wednesday_hour_start is not None and wednesday_hour_end is None:
+        if week_hours['wednesday_hour_start'] is not None and week_hours['wednesday_hour_end'] is None:
             self.add_error('wednesday_hour_end', 'Podaj koniec pracy w środy')
 
-        if thursday_hour_end is not None and thursday_hour_start is None:
+        if week_hours['thursday_hour_end'] is not None and week_hours['thursday_hour_start'] is None:
             self.add_error('thursday_hour_start', 'Podaj początek pracy w czwartki')
-        if thursday_hour_start is not None and thursday_hour_end is None:
+        if week_hours['thursday_hour_start'] is not None and week_hours['thursday_hour_end'] is None:
             self.add_error('thursday_hour_end', 'Podaj koniec pracy w czwartki')
 
-        if friday_hour_end is not None and friday_hour_start is None:
+        if week_hours['friday_hour_end'] is not None and week_hours['friday_hour_start'] is None:
             self.add_error('friday_hour_start', 'Podaj początek pracy w piątki')
-        if friday_hour_start is not None and friday_hour_end is None:
+        if week_hours['friday_hour_start'] is not None and week_hours['friday_hour_end'] is None:
             self.add_error('friday_hour_end', 'Podaj koniec pracy w piątki')
 
-        if different_hours == 'V':  # variable working hours
-            if monday_hour_end is None and monday_hour_start is None:
-                if tuesday_hour_end is None and tuesday_hour_start is None:
-                    if wednesday_hour_end is None and wednesday_hour_start is None:
-                        if thursday_hour_end is None and thursday_hour_start is None:
-                            if friday_hour_end is None and friday_hour_start is None:
-                                self.add_error('different_hours',
-                                               'Podaj godziny w wybrane dni tygodnia, bądź wybierz opcję godzin stałych')
+        week_days = week_hours.values()
+
+        # variable working hours
+        if different_hours == 'V' and all(hour is None for hour in week_days):
+            self.add_error('different_hours',
+                           'Podaj godziny w wybrane dni tygodnia, bądź wybierz opcję godzin stałych')
