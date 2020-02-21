@@ -1,14 +1,21 @@
 (function (window, document) {
 
     window.hours = function () {
+        const buttons = document.getElementsByClassName('btn-group btn-group-toggle m-1');
+        const regular_hours_button = buttons[0].querySelector('label');
+        const variable_hours_button = buttons[1].querySelector('label');
+
         if (document.getElementById('id_different_hours_0').checked === true) {
             document.getElementById('regular-hours').style.display = 'block';
             document.getElementById('variable-hours').style.display = 'none';
-            document.getElementsByClassName('btn btn-secondary')[0].classList = 'btn btn-dark';
+            regular_hours_button.classList = 'btn btn-dark';
+            variable_hours_button.classList = 'btn btn-secondary';
+
         } else {
             document.getElementById('variable-hours').style.display = 'block';
             document.getElementById('regular-hours').style.display = 'none';
-            document.getElementsByClassName('btn btn-dark')[0].classList = 'btn btn-secondary';
+            regular_hours_button.classList = 'btn btn-secondary';
+            variable_hours_button.classList = 'btn btn-dark';
         }
     };
 
