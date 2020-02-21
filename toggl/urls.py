@@ -1,7 +1,8 @@
 from django.urls import path
 
-from toggl.views import index
+from toggl.views import done, EntryView
 
 urlpatterns = [
-    path('', index),
+    path('', EntryView.as_view(), name='index'),
+    path('done/', done, name='done'),
 ]
