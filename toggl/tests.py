@@ -11,6 +11,9 @@ correct_toggl_dict = {'task': 'test', 'date_start': '2020-02-01', 'date_end': '2
                       'hour_start': '10:00', 'hour_end': '18:00', 'toggl_login': 'edfrgthyuj@wp.pl',
                       'toggl_password': 'swdefr', 'toggl_id_number': '2345'}
 
+incorect_toggl_dict = {'task': '', 'date_start': '2020-02-01', 'date_end': '2020-02-29', 'different_hours': 'R',
+                       'toggl_login': 'swdefr', 'toggl_id_number': '2345'}
+
 
 class DonePageTest(TestCase):
     def setUp(self):
@@ -113,3 +116,23 @@ class EntryViewTest(TestCase):
 
     def test_task_field_form_has_class_from_widget(self):
         self.assertIn('class="form-control"', self.form['task'].as_widget())
+
+
+class EntryFormValidationTest(TestCase):
+    def setUp(self):
+        self.correct_form = EntryForm(data=correct_toggl_dict)
+        self.incorrect_form = EntryForm(data=incorect_toggl_dict)
+
+    def test_valid_form_is_correct_validated(self):
+        self.assertTrue(self.correct_form.is_valid())
+        self.assertFalse(not self.correct_form.is_valid())
+
+    def test_invalid_form_is_correct_validated(self):
+        self.assertFalse(self.incorrect_form.is_valid())
+        self.assertTrue(not self.incorrect_form.is_valid())
+
+    def test_error_if_toggl_password_not_entered(self):
+        self.assertEqual(self.incorrect_form.errors['toggl_password'], ['Podaj hasło do konta Toggl'])
+
+    def test_toggl_login_as_not_email(self):
+        self.assertEqual(self.incorrect_form.errors['toggl_login'], ['Podane dane nie są adresem email'])
