@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import FormView
 
+from toggl.entry_functions import dates_for_first_week_days_in_month
 from toggl.forms import EntryForm
 
 headers = {
@@ -55,22 +56,15 @@ def add_toggl_entry(valid_data):
 
     if different_hours == 'R':  # regular, choice from form choices
         working_days = []
-        week_days = {}
+        first_week_days = dates_for_first_week_days_in_month(valid_data)
 
         hour_start = valid_data['hour_start']
         hour_end = valid_data['hour_end']
-
-        week_days['first_monday'] = date_start + timedelta(days=0 - date_start.weekday())
-        week_days['first_tuesday'] = date_start + timedelta(days=1 - date_start.weekday())
-        week_days['first_wednesday'] = date_start + timedelta(days=2 - date_start.weekday())
-        week_days['first_thursday'] = date_start + timedelta(days=3 - date_start.weekday())
-        week_days['first_friday'] = date_start + timedelta(days=4 - date_start.weekday())
-
         duration_in_sec = (hour_end.hour - hour_start.hour) * 3600
 
-        for day in week_days:
-            date = week_days[day]
-            if date_end >= week_days[day] >= date_start:
+        for day in first_week_days:
+            date = first_week_days[day]
+            if date_end >= first_week_days[day] >= date_start:
                 working_days.append(date)
             next_day = date + timedelta(days=7)
             while next_day <= date_end:

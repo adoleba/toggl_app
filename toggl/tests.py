@@ -5,6 +5,7 @@ from django.test import TestCase, Client, RequestFactory
 from django.urls import resolve
 from django.utils.html import escape
 
+from toggl.entry_functions import dates_for_first_week_days_in_month
 from toggl.forms import EntryForm
 from toggl.initial_data import start_day, end_day
 from toggl.views import done, EntryView
@@ -151,16 +152,7 @@ class EntryViewFunctionTest(TestCase):
                                 'wednesday_hour_end': None, 'thursday_hour_start': None, 'thursday_hour_end': None,
                                 'friday_hour_start': None, 'friday_hour_end': None}
 
-        self.first_week_days_in_month = {'first_monday': self.test_valid_data['date_start'] + datetime.timedelta(
-            days=0 - self.test_valid_data['date_start'].weekday()),
-                                         'first_tuesday': self.test_valid_data['date_start'] + datetime.timedelta(
-            days=1 - self.test_valid_data['date_start'].weekday()),
-                                         'first_wednesday': self.test_valid_data['date_start'] + datetime.timedelta(
-            days=2 - self.test_valid_data['date_start'].weekday()),
-                                         'first_thursday': self.test_valid_data['date_start'] + datetime.timedelta(
-            days=3 - self.test_valid_data['date_start'].weekday()),
-                                         'first_friday': self.test_valid_data['date_start'] + datetime.timedelta(
-            days=4 - self.test_valid_data['date_start'].weekday())}
+        self.first_week_days_in_month = dates_for_first_week_days_in_month(self.test_valid_data)
 
         self.working_days = []
         for day in self.first_week_days_in_month:
@@ -187,7 +179,7 @@ class EntryViewFunctionTest(TestCase):
         self.assertEqual(monday, self.first_week_days_in_month['first_monday'])
 
     def test_day_earlier_than_date_start(self):
-        day = datetime.date(2020, 1, 27)
+        day = datetime.date(2020, 1, 28)
         self.assertNotIn(day, self.working_days)
 
     def test_day_later_than_date_start(self):
