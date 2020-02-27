@@ -5,7 +5,7 @@ from django.test import TestCase, Client, RequestFactory
 from django.urls import resolve
 from django.utils.html import escape
 
-from toggl.entry_functions import dates_for_first_week_days_in_month
+from toggl.views import dates_for_first_week_days_in_month, dates_between_date_end_and_date_start
 from toggl.forms import EntryForm
 from toggl.initial_data import start_day, end_day
 from toggl.views import done, EntryView
@@ -154,15 +154,7 @@ class EntryViewFunctionTest(TestCase):
 
         self.first_week_days_in_month = dates_for_first_week_days_in_month(self.test_valid_data)
 
-        self.working_days = []
-        for day in self.first_week_days_in_month:
-            date = self.first_week_days_in_month[day]
-            if self.test_valid_data['date_end'] >= self.first_week_days_in_month[day] >= self.test_valid_data['date_start']:
-                self.working_days.append(date)
-            next_day = date + datetime.timedelta(days=7)
-            while next_day <= self.test_valid_data['date_end']:
-                self.working_days.append(next_day)
-                next_day += datetime.timedelta(days=7)
+        self.working_days = dates_between_date_end_and_date_start(self.first_week_days_in_month, self.test_valid_data)
 
     def test_hour_end_for_regular_and_variable_hours(self):
         if self.test_valid_data['different_hours'] == 'R':
@@ -182,6 +174,6 @@ class EntryViewFunctionTest(TestCase):
         day = datetime.date(2020, 1, 28)
         self.assertNotIn(day, self.working_days)
 
-    def test_day_later_than_date_start(self):
+    def test_day_later_than_date_end(self):
         day = datetime.date(2020, 3, 27)
         self.assertNotIn(day, self.working_days)

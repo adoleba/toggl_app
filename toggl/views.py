@@ -6,7 +6,6 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import FormView
 
-from toggl.entry_functions import dates_for_first_week_days_in_month
 from toggl.forms import EntryForm
 
 headers = {
@@ -55,21 +54,12 @@ def add_toggl_entry(valid_data):
     toggl_password = valid_data['toggl_password']
 
     if different_hours == 'R':  # regular, choice from form choices
-        working_days = []
         first_week_days = dates_for_first_week_days_in_month(valid_data)
+        working_days = dates_between_date_end_and_date_start(first_week_days, valid_data)
 
         hour_start = valid_data['hour_start']
         hour_end = valid_data['hour_end']
         duration_in_sec = (hour_end.hour - hour_start.hour) * 3600
-
-        for day in first_week_days:
-            date = first_week_days[day]
-            if date_end >= first_week_days[day] >= date_start:
-                working_days.append(date)
-            next_day = date + timedelta(days=7)
-            while next_day <= date_end:
-                working_days.append(next_day)
-                next_day += timedelta(days=7)
 
         for day in working_days:
             data = {
@@ -161,3 +151,29 @@ def add_toggl_entry(valid_data):
                 json=data,
                 headers=headers,
             )
+
+
+def dates_for_first_week_days_in_month(valid_data):
+    week_days = {}
+
+    week_days['first_monday'] = valid_data['date_start'] + timedelta(days=0 - valid_data['date_start'].weekday())
+    week_days['first_tuesday'] = valid_data['date_start'] + timedelta(days=1 - valid_data['date_start'].weekday())
+    week_days['first_wednesday'] = valid_data['date_start'] + timedelta(days=2 - valid_data['date_start'].weekday())
+    week_days['first_thursday'] = valid_data['date_start'] + timedelta(days=3 - valid_data['date_start'].weekday())
+    week_days['first_friday'] = valid_data['date_start'] + timedelta(days=4 - valid_data['date_start'].weekday())
+
+    return week_days
+
+
+def dates_between_date_end_and_date_start(days_dict, valid_data):
+    working_days = []
+    for day in days_dict:
+        date = days_dict[day]
+        if valid_data['date_end'] >= days_dict[day] >= valid_data['date_start']:
+            working_days.append(date)
+        next_day = date + timedelta(days=7)
+        while next_day <= valid_data['date_end']:
+            working_days.append(next_day)
+            next_day += timedelta(days=7)
+
+    return working_days
