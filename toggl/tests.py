@@ -171,9 +171,9 @@ class EntryViewFunctionTest(TestCase):
         self.assertEqual(monday, self.first_week_days_in_month['first_monday'])
 
     def test_day_earlier_than_date_start(self):
-        day = datetime.date(2020, 1, 28)
+        day = self.test_valid_data['date_start'] - datetime.timedelta(1)
         self.assertNotIn(day, self.working_days)
 
     def test_day_later_than_date_end(self):
-        day = datetime.date(2020, 3, 27)
+        day = self.test_valid_data['date_end'] + datetime.timedelta(1)
         self.assertNotIn(day, self.working_days)
