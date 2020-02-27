@@ -1,3 +1,5 @@
+import datetime
+
 from django.http import HttpRequest
 from django.test import TestCase, Client, RequestFactory
 from django.urls import resolve
@@ -136,3 +138,58 @@ class EntryFormValidationTest(TestCase):
 
     def test_toggl_login_as_not_email(self):
         self.assertEqual(self.incorrect_form.errors['toggl_login'], ['Podane dane nie są adresem email'])
+
+
+class EntryViewFunctionTest(TestCase):
+    def setUp(self):
+        self.test_valid_data = {'task': 'test', 'date_start': datetime.date(2020, 2, 1),
+                                'date_end': datetime.date(2020, 2, 29), 'different_hours': 'R',
+                                'toggl_login': 'edfrgthyuj@wp.pl', 'toggl_id_number': 2345,
+                                'toggl_password': 'sdf', 'hour_start': datetime.time(10, 0),
+                                'hour_end': datetime.time(18, 0), 'monday_hour_start': None, 'monday_hour_end': None,
+                                'tuesday_hour_start': None, 'tuesday_hour_end': None, 'wednesday_hour_start': None,
+                                'wednesday_hour_end': None, 'thursday_hour_start': None, 'thursday_hour_end': None,
+                                'friday_hour_start': None, 'friday_hour_end': None}
+
+        self.first_week_days_in_month = {'first_monday': self.test_valid_data['date_start'] + datetime.timedelta(
+            days=0 - self.test_valid_data['date_start'].weekday()),
+                                         'first_tuesday': self.test_valid_data['date_start'] + datetime.timedelta(
+            days=1 - self.test_valid_data['date_start'].weekday()),
+                                         'first_wednesday': self.test_valid_data['date_start'] + datetime.timedelta(
+            days=2 - self.test_valid_data['date_start'].weekday()),
+                                         'first_thursday': self.test_valid_data['date_start'] + datetime.timedelta(
+            days=3 - self.test_valid_data['date_start'].weekday()),
+                                         'first_friday': self.test_valid_data['date_start'] + datetime.timedelta(
+            days=4 - self.test_valid_data['date_start'].weekday())}
+
+        self.working_days = []
+        for day in self.first_week_days_in_month:
+            date = self.first_week_days_in_month[day]
+            if self.test_valid_data['date_end'] >= self.first_week_days_in_month[day] >= self.test_valid_data['date_start']:
+                self.working_days.append(date)
+            next_day = date + datetime.timedelta(days=7)
+            while next_day <= self.test_valid_data['date_end']:
+                self.working_days.append(next_day)
+                next_day += datetime.timedelta(days=7)
+
+    def test_hour_end_for_regular_and_variable_hours(self):
+        if self.test_valid_data['different_hours'] == 'R':
+            self.assertFalse(None, self.test_valid_data['hour_end'])
+        else:
+            self.assertTrue(not None, self.test_valid_data['hour_end'])
+
+    def test_duration_in_sec_is_correct(self):
+        duration_in_sec = (self.test_valid_data['hour_end'].hour - self.test_valid_data['hour_start'].hour) * 3600
+        self.assertEqual(duration_in_sec, 28800)
+
+    def test_first_monday_is_correct(self):
+        monday = datetime.date(2020, 1, 27)
+        self.assertEqual(monday, self.first_week_days_in_month['first_monday'])
+
+    def test_day_earlier_than_date_start(self):
+        day = datetime.date(2020, 1, 27)
+        self.assertNotIn(day, self.working_days)
+
+    def test_day_later_than_date_start(self):
+        day = datetime.date(2020, 3, 27)
+        self.assertNotIn(day, self.working_days)
