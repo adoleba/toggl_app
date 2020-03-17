@@ -1,21 +1,16 @@
 import datetime
 
+import factory
 from django.http import HttpRequest
 from django.test import TestCase, Client, RequestFactory
 from django.urls import resolve
 from django.utils.html import escape
 
+from toggl.factories import CorrectEntryFactory, InCorrectEntryFactory
 from toggl.views import dates_for_first_week_days_in_month, dates_between_date_end_and_date_start
 from toggl.forms import EntryForm
 from toggl.initial_data import start_day, end_day
 from toggl.views import done, EntryView
-
-correct_toggl_dict = {'task': 'test', 'date_start': '2020-02-01', 'date_end': '2020-02-29', 'different_hours': 'R',
-                      'hour_start': '10:00', 'hour_end': '18:00', 'toggl_login': 'edfrgthyuj@wp.pl',
-                      'toggl_password': 'swdefr', 'toggl_id_number': '2345'}
-
-incorect_toggl_dict = {'task': '', 'date_start': '2020-02-01', 'date_end': '2020-02-29', 'different_hours': 'R',
-                       'toggl_login': 'swdefr', 'toggl_id_number': '2345'}
 
 
 class DonePageTest(TestCase):
@@ -78,7 +73,8 @@ class MainPageTestPost(TestCase):
 
     # long time
     def test_redirect_after_correct_post(self):
-        response = self.client.post('/', data=correct_toggl_dict)
+        entry_data = factory.build(dict, FACTORY_CLASS=CorrectEntryFactory)
+        response = self.client.post('/', data=entry_data)
         self.assertRedirects(response, '/done/')
 
 
@@ -123,8 +119,10 @@ class EntryViewTest(TestCase):
 
 class EntryFormValidationTest(TestCase):
     def setUp(self):
-        self.correct_form = EntryForm(data=correct_toggl_dict)
-        self.incorrect_form = EntryForm(data=incorect_toggl_dict)
+        entry_data = factory.build(dict, FACTORY_CLASS=CorrectEntryFactory)
+        incorrect_entry_data = factory.build(dict, FACTORY_CLASS=InCorrectEntryFactory)
+        self.correct_form = EntryForm(data=entry_data)
+        self.incorrect_form = EntryForm(data=incorrect_entry_data)
 
     def test_valid_form_is_correct_validated(self):
         self.assertTrue(self.correct_form.is_valid())
@@ -143,14 +141,7 @@ class EntryFormValidationTest(TestCase):
 
 class EntryViewFunctionTest(TestCase):
     def setUp(self):
-        self.test_valid_data = {'task': 'test', 'date_start': datetime.date(2020, 2, 1),
-                                'date_end': datetime.date(2020, 2, 29), 'different_hours': 'R',
-                                'toggl_login': 'edfrgthyuj@wp.pl', 'toggl_id_number': 2345,
-                                'toggl_password': 'sdf', 'hour_start': datetime.time(10, 0),
-                                'hour_end': datetime.time(18, 0), 'monday_hour_start': None, 'monday_hour_end': None,
-                                'tuesday_hour_start': None, 'tuesday_hour_end': None, 'wednesday_hour_start': None,
-                                'wednesday_hour_end': None, 'thursday_hour_start': None, 'thursday_hour_end': None,
-                                'friday_hour_start': None, 'friday_hour_end': None}
+        self.test_valid_data = factory.build(dict, FACTORY_CLASS=CorrectEntryFactory)
 
         self.first_week_days_in_month = dates_for_first_week_days_in_month(self.test_valid_data)
 
