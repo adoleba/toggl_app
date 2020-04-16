@@ -386,3 +386,4 @@ dmypy.json
 *.css
 
 static/
+staticfiles/
