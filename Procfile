@@ -1,0 +1,1 @@
+web: gunicorn toggl_app.wsgi --log-file -
