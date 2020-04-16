@@ -131,7 +131,6 @@ MEDIA_URL = '/media/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 django_heroku.settings(locals())
-DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql'
 
 LOGGING = {
     'version': 1,
