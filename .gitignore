@@ -385,5 +385,4 @@ dmypy.json
 #Css files
 *.css
 
-static/
 staticfiles/
