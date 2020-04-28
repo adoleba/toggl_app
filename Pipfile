@@ -15,6 +15,7 @@ heroku = "==0.1.4"
 whitenoise = "==5.0.1"
 psycopg2 = "==2.8.5"
 django-heroku = "==0.3.1"
+django-uwsgi = "==0.2.2"
 
 [requires]
 python_version = "3.7"

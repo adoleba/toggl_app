@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'toggl',
 
     'django.contrib.admin',
+    'django_uwsgi',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
