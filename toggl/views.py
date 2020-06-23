@@ -1,3 +1,4 @@
+import datetime
 from datetime import timedelta
 
 import requests
@@ -66,9 +67,7 @@ def add_toggl_entry(valid_data):
                 "time_entry": {
                     "description": task,
                     "duration": str(duration_in_sec),
-                    "start": str('{:04d}'.format(day.year)) + "-" + str('{:02d}'.format(day.month)) + "-" + str(
-                        '{:02d}'.format(day.day)) + "T" + str('{:02d}'.format(hour_start.hour - 2)) + ":" + str(
-                        '{:02d}'.format(hour_start.minute)) + ":00.000Z",
+                    "start": datetime.datetime(day.year, day.month, day.day, hour_start.hour, hour_start.minute).astimezone().replace(microsecond=0).isoformat(),
                     "id": toggl_id_number,
                     "created_with": "curl",
                 }
@@ -138,9 +137,7 @@ def add_toggl_entry(valid_data):
                 "time_entry": {
                     "description": task,
                     "duration": str(working_days[day][2]),
-                    "start": str('{:04d}'.format(day.year)) + "-" + str('{:02d}'.format(day.month)) + "-" + str(
-                        '{:02d}'.format(day.day)) + "T" + str('{:02d}'.format(time.hour - 2)) + ":" + str(
-                        '{:02d}'.format(time.minute)) + ":00.000Z",
+                    "start": datetime.datetime(day.year, day.month, day.day, time.hour, time.minute).astimezone().replace(microsecond=0).isoformat(),
                     "id": toggl_id_number,
                     "created_with": "curl",
                 }
