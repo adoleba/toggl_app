@@ -7,9 +7,9 @@ from django.urls import resolve
 from django.utils.html import escape
 
 from toggl.factories import CorrectEntryFactory, InCorrectEntryFactory
-from toggl.views import dates_for_first_week_days_in_month, dates_between_date_end_and_date_start
 from toggl.forms import EntryForm
 from toggl.initial_data import start_day, end_day
+from toggl.views import dates_for_first_week_days_in_month, dates_between_date_end_and_date_start
 from toggl.views import done, EntryView
 
 

@@ -21,7 +21,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('', include('toggl.urls')),
-    path('admin/uwsgi/', include('django_uwsgi.urls')),
     path('admin/', admin.site.urls),
 ]
 
