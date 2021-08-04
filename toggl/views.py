@@ -73,7 +73,7 @@ def add_toggl_entry(valid_data):
                 }
             }
             resp = requests.post(
-                'https://www.toggl.com/api/v8/time_entries',
+                'https://api.track.toggl.com/api/v8/time_entries',
                 auth=(toggl_login, toggl_password),
                 json=data,
                 headers=headers,
@@ -143,7 +143,7 @@ def add_toggl_entry(valid_data):
                 }
             }
             resp = requests.post(
-                'https://www.toggl.com/api/v8/time_entries',
+                'https://api.track.toggl.com/api/v8/time_entries',
                 auth=(toggl_login, toggl_password),
                 json=data,
                 headers=headers,
